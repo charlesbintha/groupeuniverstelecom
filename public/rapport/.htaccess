@@ -1,0 +1,14 @@
+# Deny access to sensitive files
+<FilesMatch "^(\.env|composer\.(json|lock)|\.gitignore|\.git|AGENTS\.md|Rapport\.pdf)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Allow PHP execution
+<FilesMatch "\.php$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+
+# Prevent directory listing
+Options -Indexes
