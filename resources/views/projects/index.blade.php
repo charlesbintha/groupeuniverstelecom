@@ -127,12 +127,17 @@
       white-space: nowrap; /* évite le retour à la ligne */
     }
 
-    /* Si tu veux que le texte se mette sur 2 lignes max */
+    /* Le texte est limité dans un élément interne afin que le td reste
+       une vraie cellule de tableau (important pour le fond des retards). */
     td:nth-child(2) {
       white-space: normal;
+    }
+    .project-name {
       display: -webkit-box;
       -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
       overflow: hidden;
+      line-height: 1.35;
     }
 
     .section tr:last-child td {
@@ -297,7 +302,7 @@
                         @foreach($projects as $project)
                             <tr class="row {{ $project->isOverdue() ? 'project-overdue' : '' }}">
                                 <td><strong>{{ $project->code_projet }}</strong></td>
-                                <td>{{ $project->nom_projet }}</td>
+                                <td><span class="project-name">{{ $project->nom_projet }}</span></td>
                                 <td>
                                     <span class="pill {{ $project->type_projet->value === 'Externe' ? 'green' : 'blue' }}">
                                         {{ $project->type_projet->value }}
