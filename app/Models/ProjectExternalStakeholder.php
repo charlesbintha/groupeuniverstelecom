@@ -13,6 +13,7 @@ class ProjectExternalStakeholder extends Model
         'organisation',
         'nom_complet',
         'email',
+        'telephone',
         'role',
         'attentes',
     ];

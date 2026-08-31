@@ -841,6 +841,7 @@
                         <th>Organisation</th>
                         <th>Prénom et nom</th>
                         <th>Email</th>
+                        <th>Téléphone</th>
                         <th style="width:120px">Rôle</th>
                         <th>Implication / Attentes</th>
                     </tr>
@@ -851,6 +852,7 @@
                             <td>{{ $stakeholder->organisation ?? '—' }}</td>
                             <td>{{ $stakeholder->nom_complet }}</td>
                             <td>{{ $stakeholder->email ?? '—' }}</td>
+                            <td>{{ $stakeholder->telephone ?? '—' }}</td>
                             <td>{{ $stakeholder->role ?? '—' }}</td>
                             <td class="wraptext">{{ $stakeholder->attentes ?? '—' }}</td>
                         </tr>

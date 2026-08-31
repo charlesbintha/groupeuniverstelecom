@@ -276,6 +276,7 @@
     .dynamic-row.grid-3 { grid-template-columns: 1fr 1fr auto; }
     .dynamic-row.grid-4 { grid-template-columns: 1fr 2fr 1fr auto; }
     .dynamic-row.grid-5 { grid-template-columns: 1fr 1.2fr 1fr 1.5fr auto; }
+    .dynamic-row.grid-6 { grid-template-columns: 1fr 1.2fr 1fr 1fr 1fr 1.5fr auto; }
     .dynamic-row.grid-6 { grid-template-columns: 1fr 1fr 0.8fr 0.6fr 1.2fr auto; }
 
     @media (max-width: 768px) {
@@ -283,6 +284,7 @@
         .dynamic-row.grid-3,
         .dynamic-row.grid-4,
         .dynamic-row.grid-5,
+        .dynamic-row.grid-6,
         .dynamic-row.grid-6 {
             grid-template-columns: 1fr;
         }
@@ -1550,6 +1552,7 @@ const DIR_MAP = @json($directionsMap);
         $extOrganisations = old('ext_stake_organisation', []);
         $extNomsComplets = old('ext_stake_nom_complet', []);
         $extEmails = old('ext_stake_email', []);
+        $extTelephones = old('ext_stake_telephone', []);
         $extRoles = old('ext_stake_role', []);
         $extAttentes = old('ext_stake_attentes', []);
         foreach ($extOrganisations as $i => $org) {
@@ -1557,6 +1560,7 @@ const DIR_MAP = @json($directionsMap);
                 'organisation' => $org ?? '',
                 'nom_complet' => $extNomsComplets[$i] ?? '',
                 'email' => $extEmails[$i] ?? '',
+                'telephone' => $extTelephones[$i] ?? '',
                 'role' => $extRoles[$i] ?? '',
                 'attentes' => $extAttentes[$i] ?? ''
             ];
@@ -1840,8 +1844,8 @@ function addStakeholder(role = '', empId = '', attentes = '') {
     syncHidden();
 }
 
-function addExternalStakeholder(organisation = '', nomComplet = '', email = '', role = '', attentes = '') {
-    const g = el('div', 'dynamic-row grid-5');
+function addExternalStakeholder(organisation = '', nomComplet = '', email = '', telephone = '', role = '', attentes = '') {
+    const g = el('div', 'dynamic-row grid-6');
     g.innerHTML = `
         <div class="form-group">
             <input type="text" name="ext_stake_organisation[]" value="${organisation || ''}" placeholder="Organisation">
@@ -1851,6 +1855,9 @@ function addExternalStakeholder(organisation = '', nomComplet = '', email = '', 
         </div>
         <div class="form-group">
             <input type="email" name="ext_stake_email[]" value="${email || ''}" placeholder="Email (optionnel)">
+        </div>
+        <div class="form-group">
+            <input type="tel" name="ext_stake_telephone[]" value="${telephone || ''}" placeholder="Téléphone (optionnel)" maxlength="30">
         </div>
         <div class="form-group">
             <input type="text" name="ext_stake_role[]" value="${role || ''}" placeholder="Rôle">
@@ -2253,7 +2260,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (EXISTING_STAKEHOLDERS.length === 0) addStakeholder();
 
     // Load existing external stakeholders
-    EXISTING_EXTERNAL_STAKEHOLDERS.forEach(s => addExternalStakeholder(s.organisation, s.nom_complet, s.email, s.role, s.attentes));
+    EXISTING_EXTERNAL_STAKEHOLDERS.forEach(s => addExternalStakeholder(s.organisation, s.nom_complet, s.email, s.telephone, s.role, s.attentes));
 
     // Load existing issues
     EXISTING_ISSUES.forEach(i => addIssue(i.cat, i.detail));

@@ -23,4 +23,15 @@ class ProjectDocumentValidationTest extends TestCase
         $this->assertContains('mimes:pdf,doc,docx,zip,xls,xlsx', $rules['contractualisation_document']);
         $this->assertContains('mimes:pdf,doc,docx,zip,xls,xlsx', $rules['livrable_document.*']);
     }
+
+    public function test_project_requests_accept_external_stakeholder_telephone_numbers(): void
+    {
+        $storeRules = (new StoreProjectRequest())->rules();
+        $updateRules = (new UpdateProjectRequest())->rules();
+
+        $this->assertSame(['nullable', 'array'], $storeRules['ext_stake_telephone']);
+        $this->assertSame(['nullable', 'string', 'max:30'], $storeRules['ext_stake_telephone.*']);
+        $this->assertSame(['nullable', 'array'], $updateRules['ext_stake_telephone']);
+        $this->assertSame(['nullable', 'string', 'max:30'], $updateRules['ext_stake_telephone.*']);
+    }
 }

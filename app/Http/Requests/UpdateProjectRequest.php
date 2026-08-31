@@ -94,6 +94,8 @@ class UpdateProjectRequest extends FormRequest
             'ext_stake_nom_complet.*' => ['nullable', 'string', 'max:200'],
             'ext_stake_email' => ['nullable', 'array'],
             'ext_stake_email.*' => ['nullable', 'email', 'max:255'],
+            'ext_stake_telephone' => ['nullable', 'array'],
+            'ext_stake_telephone.*' => ['nullable', 'string', 'max:30'],
             'ext_stake_role' => ['nullable', 'array'],
             'ext_stake_role.*' => ['nullable', 'string', 'max:255'],
             'ext_stake_attentes' => ['nullable', 'array'],
@@ -177,6 +179,7 @@ class UpdateProjectRequest extends FormRequest
             'ext_stake_nom_complet.*.max' => 'Le nom complet ne peut pas dépasser 200 caractères.',
             'ext_stake_email.*.email' => 'L\'adresse email de la partie prenante externe doit être valide.',
             'ext_stake_email.*.max' => 'L\'adresse email ne peut pas dépasser 255 caractères.',
+            'ext_stake_telephone.*.max' => 'Le numéro de téléphone ne peut pas dépasser 30 caractères.',
             'ext_stake_role.*.max' => 'Le rôle de la partie prenante externe ne peut pas dépasser 255 caractères.',
             'ext_stake_attentes.*.max' => 'Les attentes de la partie prenante externe ne peuvent pas dépasser 1000 caractères.',
 

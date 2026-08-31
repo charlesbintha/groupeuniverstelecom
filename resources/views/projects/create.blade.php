@@ -276,6 +276,7 @@
     .dynamic-row.grid-3 { grid-template-columns: 1fr 1fr auto; }
     .dynamic-row.grid-4 { grid-template-columns: 1fr 2fr 1fr auto; }
     .dynamic-row.grid-5 { grid-template-columns: 1fr 1.2fr 1fr 1.5fr auto; }
+    .dynamic-row.grid-6 { grid-template-columns: 1fr 1.2fr 1fr 1fr 1fr 1.5fr auto; }
     .dynamic-row.grid-6 { grid-template-columns: 1fr 1fr 0.8fr 0.6fr 1.2fr auto; }
 
     @media (max-width: 768px) {
@@ -283,6 +284,7 @@
         .dynamic-row.grid-3,
         .dynamic-row.grid-4,
         .dynamic-row.grid-5,
+        .dynamic-row.grid-6,
         .dynamic-row.grid-6 {
             grid-template-columns: 1fr;
         }
@@ -2212,8 +2214,8 @@ function addStakeholder(role = '', empId = '', attentes = '', opts = {}) {
 }
 
 // External Stakeholders
-function addExternalStakeholder(organisation = '', nomComplet = '', email = '', role = '', attentes = '') {
-    const g = el('div', 'dynamic-row grid-5');
+function addExternalStakeholder(organisation = '', nomComplet = '', email = '', telephone = '', role = '', attentes = '') {
+    const g = el('div', 'dynamic-row grid-6');
     g.innerHTML = `
         <div class="form-group">
             <input type="text" name="ext_stake_organisation[]" value="${organisation}" placeholder="Organisation">
@@ -2223,6 +2225,9 @@ function addExternalStakeholder(organisation = '', nomComplet = '', email = '', 
         </div>
         <div class="form-group">
             <input type="email" name="ext_stake_email[]" value="${email}" placeholder="Email (optionnel)">
+        </div>
+        <div class="form-group">
+            <input type="tel" name="ext_stake_telephone[]" value="${telephone}" placeholder="Téléphone (optionnel)" maxlength="30">
         </div>
         <div class="form-group">
             <input type="text" name="ext_stake_role[]" value="${role}" placeholder="Rôle">
@@ -2391,6 +2396,7 @@ function populateDuplicatedData(data = null) {
     const duplicatedExtStakeOrganisation = data?.ext_stake_organisation ?? @json(old('ext_stake_organisation', session('ext_stake_organisation', [])));
     const duplicatedExtStakeNomComplet = data?.ext_stake_nom_complet ?? @json(old('ext_stake_nom_complet', session('ext_stake_nom_complet', [])));
     const duplicatedExtStakeEmail = data?.ext_stake_email ?? @json(old('ext_stake_email', session('ext_stake_email', [])));
+    const duplicatedExtStakeTelephone = data?.ext_stake_telephone ?? @json(old('ext_stake_telephone', session('ext_stake_telephone', [])));
     const duplicatedExtStakeRole = data?.ext_stake_role ?? @json(old('ext_stake_role', session('ext_stake_role', [])));
     const duplicatedExtStakeAttentes = data?.ext_stake_attentes ?? @json(old('ext_stake_attentes', session('ext_stake_attentes', [])));
     const duplicatedIssueCat = data?.issue_cat ?? @json(old('issue_cat', session('issue_cat', [])));
@@ -2517,10 +2523,11 @@ function populateDuplicatedData(data = null) {
         duplicatedExtStakeOrganisation.forEach((organisation, index) => {
             const nomComplet = duplicatedExtStakeNomComplet[index] || '';
             const email = duplicatedExtStakeEmail[index] || '';
+            const telephone = duplicatedExtStakeTelephone[index] || '';
             const role = duplicatedExtStakeRole[index] || '';
             const attentes = duplicatedExtStakeAttentes[index] || '';
             if (organisation || nomComplet) {
-                addExternalStakeholder(organisation, nomComplet, email, role, attentes);
+                addExternalStakeholder(organisation, nomComplet, email, telephone, role, attentes);
             }
         });
     }

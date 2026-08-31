@@ -381,6 +381,7 @@ class ProjectController extends Controller
             $extOrganisations = $request->input('ext_stake_organisation', []);
             $extNomsComplets = $request->input('ext_stake_nom_complet', []);
             $extEmails = $request->input('ext_stake_email', []);
+            $extTelephones = $request->input('ext_stake_telephone', []);
             $extRoles = $request->input('ext_stake_role', []);
             $extAttentes = $request->input('ext_stake_attentes', []);
 
@@ -393,6 +394,7 @@ class ProjectController extends Controller
                         'organisation' => $organisation ?: null,
                         'nom_complet' => $nomComplet,
                         'email' => $extEmails[$i] ?? null,
+                        'telephone' => $extTelephones[$i] ?? null,
                         'role' => $extRoles[$i] ?? null,
                         'attentes' => $extAttentes[$i] ?? null,
                     ]);
@@ -617,6 +619,7 @@ class ProjectController extends Controller
                 'organisation' => $s->organisation ?? null,
                 'nom_complet'  => $s->nom_complet ?? null,
                 'email'        => $s->email ?? null,
+                'telephone' => $s->telephone ?? null,
                 'role'         => $s->role ?? null,
                 'attentes' => $s->attentes ?? null,
             ];
@@ -978,6 +981,7 @@ class ProjectController extends Controller
             $extOrganisations = $request->input('ext_stake_organisation', []);
             $extNomsComplets = $request->input('ext_stake_nom_complet', []);
             $extEmails = $request->input('ext_stake_email', []);
+            $extTelephones = $request->input('ext_stake_telephone', []);
             $extRoles = $request->input('ext_stake_role', []);
             $extAttentes = $request->input('ext_stake_attentes', []);
 
@@ -990,6 +994,7 @@ class ProjectController extends Controller
                         'organisation' => $organisation ?: null,
                         'nom_complet' => $nomComplet,
                         'email' => $extEmails[$i] ?? null,
+                        'telephone' => $extTelephones[$i] ?? null,
                         'role' => $extRoles[$i] ?? null,
                         'attentes' => $extAttentes[$i] ?? null,
                     ]);
@@ -1187,6 +1192,7 @@ class ProjectController extends Controller
                 'ext_stake_organisation' => $project->externalStakeholders->pluck('organisation')->toArray(),
                 'ext_stake_nom_complet' => $project->externalStakeholders->pluck('nom_complet')->toArray(),
                 'ext_stake_email' => $project->externalStakeholders->pluck('email')->toArray(),
+                'ext_stake_telephone' => $project->externalStakeholders->pluck('telephone')->toArray(),
                 'ext_stake_role' => $project->externalStakeholders->pluck('role')->toArray(),
                 'ext_stake_attentes' => $project->externalStakeholders->pluck('attentes')->toArray(),
 
@@ -1679,6 +1685,8 @@ class ProjectController extends Controller
                 'stake_emp_id' => ['nullable', 'array', 'max:50'],
                 'ext_stake_organisation' => ['nullable', 'array', 'max:50'],
                 'ext_stake_nom_complet' => ['nullable', 'array', 'max:50'],
+                'ext_stake_telephone' => ['nullable', 'array', 'max:50'],
+                'ext_stake_telephone.*' => ['nullable', 'string', 'max:30'],
                 'issue_cat' => ['nullable', 'array', 'max:50'],
             ],
             default => [],
