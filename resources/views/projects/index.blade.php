@@ -192,6 +192,22 @@
         padding: 0 18px 40px;
         }
 
+    tr.project-overdue td {
+        background: #fff1f2;
+        border-top: 1px solid #fecaca;
+        border-bottom: 1px solid #fecaca;
+    }
+    tr.project-overdue td:first-child {
+        border-left: 4px solid #dc2626;
+    }
+    .overdue-note {
+        display: block;
+        margin-top: 6px;
+        color: #b91c1c;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
 
 </style>
 @endsection
@@ -272,13 +288,14 @@
                             <th>Entité</th>
                             <th>Chef de projet </th>
                             <th>Statut</th>
+                            <th>Date fin</th>
                             <th>Budget</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($projects as $project)
-                            <tr class="row">
+                            <tr class="row {{ $project->isOverdue() ? 'project-overdue' : '' }}">
                                 <td><strong>{{ $project->code_projet }}</strong></td>
                                 <td>{{ $project->nom_projet }}</td>
                                 <td>
@@ -300,7 +317,11 @@
                                     @endswitch">
                                         {{ $project->statut_initial->value }}
                                     </span>
+                                    @if($project->isOverdue())
+                                        <span class="overdue-note">⚠ En retard de {{ $project->overdueDays() }} jour(s)</span>
+                                    @endif
                                 </td>
+                                <td>{{ $project->date_fin ? $project->date_fin->format('d/m/Y') : '—' }}</td>
                                 <td>{{ $project->budget_initial ? number_format($project->budget_initial, 0, ',', ' ') . ' FCFA' : '—' }}</td>
                                 <td>
                                     <div style="display: flex; gap: 6px;">

@@ -380,6 +380,13 @@
     </a>
 </div>
 
+@if($project->isOverdue())
+    <div class="alert alert-error" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+        <strong>⚠ Projet en retard de {{ $project->overdueDays() }} jour(s)</strong>
+        <span>Date de fin prévue : {{ $project->date_fin->format('d/m/Y') }} — statut actuel : {{ $project->statut_initial->value }}</span>
+    </div>
+@endif
+
 <div class="card">
     <div class="card-head">
         <h2 class="title">

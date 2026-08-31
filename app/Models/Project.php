@@ -112,6 +112,21 @@ class Project extends Model
     }
 
     /**
+     * Determine whether the planned end date has passed while the project is unfinished.
+     */
+    public function isOverdue(): bool
+    {
+        return $this->date_fin !== null
+            && $this->date_fin->isBefore(today())
+            && $this->statut_initial !== ProjectStatus::TERMINE;
+    }
+
+    public function overdueDays(): int
+    {
+        return $this->isOverdue() ? (int) $this->date_fin->diffInDays(today()) : 0;
+    }
+
+    /**
      * Get the user (creator) of this project.
      */
     public function user()
@@ -203,6 +218,16 @@ class Project extends Model
     public function scopeByStatus($query, ProjectStatus $status)
     {
         return $query->where('statut_initial', $status);
+    }
+
+    /**
+     * Scope projects whose planned end date has passed and which are not completed.
+     */
+    public function scopeOverdue($query)
+    {
+        return $query
+            ->whereDate('date_fin', '<', today())
+            ->where('statut_initial', '!=', ProjectStatus::TERMINE->value);
     }
 
     /**

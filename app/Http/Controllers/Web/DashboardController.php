@@ -51,7 +51,7 @@ class DashboardController extends Controller
             'non_demarrer' => (clone $query)->whereIn('statut_initial', ['Planifié'])->count(),
             'suspendu' => (clone $query)->where('statut_initial', 'Suspendu')->count(),
             'mis_en_pause' => (clone $query)->where('statut_initial', 'Mis en pause')->count(),
-            'retard' => (clone $query)->where('statut_initial', 'Retard')->count(),
+            'retard' => (clone $query)->overdue()->count(),
             'completed' => (clone $query)->where('statut_initial', 'Terminé')->count(),
             'budget_total' => (clone $query)->sum('budget_initial'),
             'me_total' => (clone $query)->sum('montant_encaissement'),
